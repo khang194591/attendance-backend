@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+  ams-backend:
+    env_file:
+      - .env
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: ams-backend
+    container_name: ams-backend
+    restart: always
+    links:
+      - db:db
+    depends_on:
+      - db
+    ports:
+      - '3000:3000'
+    command: npm start
+
+volumes:
+  postgres:
