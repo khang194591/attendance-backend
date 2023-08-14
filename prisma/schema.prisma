@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -33,7 +34,8 @@ model User {
   roleId Int?
   role   Role? @relation(fields: [roleId], references: [id])
 
-  attendances Attendance[]
+  attendances     Attendance[]
+  absenceRequests AbsenceRequest[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -59,6 +61,19 @@ model Attendance {
 
   userId Int
   user   User @relation(fields: [userId], references: [id])
+}
+
+model AbsenceRequest {
+  id Int @id @default(autoincrement())
+
+  date   String
+  reason String
+  status Status @default(pending)
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
 }
 
 enum Gender {

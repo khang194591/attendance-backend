@@ -17,19 +17,33 @@ const seedRole = async () => {
         permissions,
       },
     })
-    await prisma.user.create({
-      data: {
-        email: 'khang194591@gmail.com',
-        password: hashSync('@sang.123', 10),
-        name: 'Trịnh Đức Khang',
-        phone: '0862612659',
-        birthDay: '2001-11-03',
-        gender: Gender.male,
-        status: Status.active,
-        avatarUrl: 'https://lh3.googleusercontent.com/a/AGNmyxYJsfiCILLkigCHBtHFni2m4Et5LS4oZ0P-684G=s96-c',
-        roleId: superAdminRole.id,
-        isSuper: true,
-      },
+    await prisma.user.createMany({
+      data: [
+        {
+          email: 'khang194591@gmail.com',
+          password: hashSync('@sang.123', 10),
+          name: 'Trịnh Đức Khang',
+          phone: '0862612659',
+          birthDay: '2001-11-03',
+          gender: Gender.male,
+          status: Status.active,
+          avatarUrl: 'https://lh3.googleusercontent.com/a/AGNmyxYJsfiCILLkigCHBtHFni2m4Et5LS4oZ0P-684G=s96-c',
+          roleId: superAdminRole.id,
+          isSuper: true,
+        },
+        {
+          email: 'khang.td194591@sis.hust.edu.vn.',
+          password: hashSync('@sang.123', 10),
+          name: 'Trịnh Khang',
+          phone: '0862612658',
+          birthDay: '2001-11-03',
+          gender: Gender.male,
+          status: Status.active,
+          avatarUrl: 'https://lh3.googleusercontent.com/a/AGNmyxYJsfiCILLkigCHBtHFni2m4Et5LS4oZ0P-684G=s96-c',
+          roleId: superAdminRole.id,
+          isSuper: false,
+        },
+      ],
     })
   } catch (error) {
     console.log(error)

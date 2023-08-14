@@ -7,6 +7,7 @@ import { AuthModule } from './modules/auth/auth.module'
 import { PublicModule } from './modules/public/public.module'
 import { RoleModule } from './modules/setting/role/role.module'
 import { UserModule } from './modules/user/user.module'
+import { AbsenceModule } from './modules/absence/absence.module'
 
 @Module({
   imports: [
@@ -17,12 +18,13 @@ import { UserModule } from './modules/user/user.module'
       resolvers: [new HeaderResolver(['x-custom-lang'])],
       typesOutputPath: './src/i18n.generated.ts',
     }),
-    // PrismaModule,
-    // PublicModule,
-    // AuthModule,
-    // UserModule,
-    // RoleModule,
-    // AttendanceModule,
+    PrismaModule,
+    PublicModule,
+    AuthModule,
+    UserModule,
+    RoleModule,
+    AttendanceModule,
+    AbsenceModule,
   ],
   controllers: [],
   providers: [],

@@ -20,7 +20,7 @@ const seedUser = async () => {
       },
     })
     const promises = []
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 200; i++) {
       const randomNumber = 1 + parseInt((Math.random() * 120).toString())
       const gender = Math.random() < 0.5 ? Gender.male : Gender.female
       const firstName = faker.person.firstName(gender)
@@ -39,14 +39,13 @@ const seedUser = async () => {
           bank: 'Viettel Money',
           birthDay: dayjs(faker.date.birthdate({ min: 18, max: 40, mode: 'age' })).format(DATE_FORMAT),
           roleId: userRole.id,
-          avatarUrl: `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/${randomNumber}.png`,
         },
       })
       promises.push(promise)
     }
     const users = (await Promise.all(promises)) as User[]
     users.forEach(async (user) => {
-      const startMonth = dayjs().startOf('month')
+      const startMonth = dayjs().startOf('month').subtract(1, 'month')
       for (let i = 0; i < dayjs().daysInMonth(); i++) {
         const date = startMonth.add(i, 'day').format(DATE_FORMAT)
         const day = dayjs(date, DATE_FORMAT).get('day')

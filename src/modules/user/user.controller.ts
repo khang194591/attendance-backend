@@ -1,4 +1,4 @@
-import { RequiredPermissions } from '@/common/decorators'
+import { RequiredPermissions, UserId } from '@/common/decorators'
 import { PermissionsGuard } from '@/common/guards'
 import { Action, Resource } from '@/common/interfaces'
 import { YupValidationPipe } from '@/common/pipes'
@@ -75,6 +75,15 @@ export class UserController {
   remove(@Param('id', ParseIntPipe) id: string) {
     try {
       return this.userService.remove(+id)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  @Post('bulk')
+  dashboard(@Body() data: any) {
+    try {
+      return this.userService.createBulk(data)
     } catch (error) {
       throw error
     }

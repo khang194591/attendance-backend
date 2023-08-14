@@ -35,7 +35,12 @@ export class UserService {
       const totalPage = Math.ceil(total / take)
       const items = await this.repository.findMany({
         orderBy,
-        where,
+        where: {
+          ...where,
+          name: {
+            search: queryParams.name,
+          },
+        },
         take,
         skip,
         include: { role: { select: { name: true } } },
@@ -80,6 +85,17 @@ export class UserService {
   async remove(id: number) {
     try {
       return await this.repository.delete({ where: { id } })
+    } catch (error) {
+      this.logger.error(error)
+      throw error
+    }
+  }
+
+  async createBulk(data: UserDto[]) {
+    try {
+      return await this.repository.createMany({
+        data,
+      })
     } catch (error) {
       this.logger.error(error)
       throw error
